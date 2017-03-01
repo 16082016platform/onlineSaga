@@ -1,4 +1,4 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:widgets="utils/widgets" loaded="pageLoaded" id="categoriasScreen" cssClass="screen">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:widgets="utils/widgets" loaded="pageLoaded" id="categoriasScreen">
     <Page.actionBar>
         <widgets:action-bar />
     </Page.actionBar>
@@ -10,11 +10,10 @@
             <ListView row="1" items="{{ listItems }}" itemTap="onListViewItemTap">
                 <ListView.itemTemplate>
                     <StackLayout>
-                        <GridLayout columns="*" cssClass="padded-label">
+                        <GridLayout columns="*" >
 
-
-                            <StackLayout col="2" cssClass="padded-label-stack">
-                                <Label col="0" text="{{ header }}" cssClass="title-label" textWrap="true" />
+                            <StackLayout col="2">
+                                <Label col="0" text="{{ header }}" textWrap="true" />
                             </StackLayout>
 
                         </GridLayout>
