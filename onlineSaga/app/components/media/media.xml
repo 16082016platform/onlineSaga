@@ -22,7 +22,13 @@
                     </StackLayout>
                 </ListView.itemTemplate>
             </ListView>
-            <ActivityIndicator row="1" busy="{{ isLoading }}" />
+            <!--<ActivityIndicator row="1" busy="{{ isLoading }}" />-->
+            <GridLayout cssClass="activityIndicator" row="1" rows="*" visibility="{{isLoading ? 'visible' : 'collapsed'}}">
+                <StackLayout>
+                    <ActivityIndicator busy="true"/>
+                    <Label text="Cargando..." />
+                </StackLayout>
+            </GridLayout>
         </GridLayout>
         <!-- additional view content -->
 

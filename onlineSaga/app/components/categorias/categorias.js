@@ -17,14 +17,18 @@ function onListViewItemTap(args) {
             filter: {
                 categoria: itemData.details.Id
             }
-        }
+        },
+        animated: true,
+        transition: {
+            name: "slide"
+        },
     });
 }
 exports.onListViewItemTap = onListViewItemTap;
 
 function flattenLocationProperties(dataItem) {
     var propName, propValue,
-        isLocation = function(value) {
+        isLocation = function (value) {
             return propValue && typeof propValue === 'object' &&
                 propValue.longitude && propValue.latitude;
         };
@@ -44,57 +48,40 @@ function flattenLocationProperties(dataItem) {
 
 function pageLoaded(args) {
     var page = args.object;
-
     helpers.platformInit(page);
     page.bindingContext = viewModel;
 
     viewModel.set('isLoading', true);
     viewModel.set('listItems', []);
-
     function _fetchData() {
         var context = page.navigationContext;
-
         if (context && context.filter) {
             return service.getAllRecords(context.filter);
         }
-
         return service.getAllRecords();
     };
-
     _fetchData()
-        .then(function(result) {
+        .then(function (result) {
             var itemsList = [];
-
-            result.forEach(function(item) {
-
+            result.forEach(function (item) {
                 flattenLocationProperties(item);
-
                 itemsList.push({
-
                     header: item.nombre,
-
                     // singleItem properties
                     details: item
                 });
             });
-
             viewModel.set('listItems', itemsList);
             viewModel.set('isLoading', false);
         })
         .catch(function onCatch() {
             viewModel.set('isLoading', false);
         });
-    // additional pageLoaded
 
+    // additional pageLoaded
     if (isInit) {
         isInit = false;
-
         // additional pageInit
     }
 }
-
-// START_CUSTOM_CODE_categorias
-// Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
-
-// END_CUSTOM_CODE_categorias
 exports.pageLoaded = pageLoaded;

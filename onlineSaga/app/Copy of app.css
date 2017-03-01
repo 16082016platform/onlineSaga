@@ -12,20 +12,10 @@ button {
     horizontal-align: stretch;
 }
 
-image{
+image,
+activityindicator {
     horizontal-align: center;
     vertical-align: center;
-}
-
-.activityIndicator StackLayout{
-    horizontal-align: center;
-    vertical-align: center;
-    color: #ffffff;
-    height: 100;
-    width: 120;
-    background-color: #b2c804;
-    border-radius: 10;
-    text-align: center;
 }
 
 label,
