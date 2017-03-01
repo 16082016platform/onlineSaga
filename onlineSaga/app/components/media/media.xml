@@ -10,11 +10,14 @@
             <ListView row="1" items="{{ listItems }}" itemTap="onListViewItemTap">
                 <ListView.itemTemplate>
                     <StackLayout>
-                        <GridLayout columns="*" cssClass="padded-label">
+                        <GridLayout columns="100, *" cssClass="padded-label">
+
+
+                            <Image col="0" width="100" height="100" src="{{ image }}" />
 
 
                             <StackLayout col="2" cssClass="padded-label-stack">
-                                <Label col="0" text="{{ header }}" cssClass="title-label" textWrap="true" />
+                                <Label col="1" text="{{ header }}" cssClass="title-label" textWrap="true" />
                             </StackLayout>
 
                         </GridLayout>
@@ -22,13 +25,7 @@
                     </StackLayout>
                 </ListView.itemTemplate>
             </ListView>
-            <!--<ActivityIndicator row="1" busy="{{ isLoading }}" />-->
-            <GridLayout cssClass="activityIndicator" row="1" rows="*" visibility="{{isLoading ? 'visible' : 'collapsed'}}">
-                <StackLayout>
-                    <ActivityIndicator busy="true"/>
-                    <Label text="Cargando..." />
-                </StackLayout>
-            </GridLayout>
+            <ActivityIndicator row="1" busy="{{ isLoading }}" />
         </GridLayout>
         <!-- additional view content -->
 

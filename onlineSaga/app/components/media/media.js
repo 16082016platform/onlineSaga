@@ -67,6 +67,10 @@ function pageLoaded(args) {
 
                 itemsList.push({
 
+                    icon: '\ue0dc', //globe
+
+                    image: item.imagen,
+
                     header: item.color,
 
                     // singleItem properties
