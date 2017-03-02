@@ -10,7 +10,10 @@ ViewModel = new Observable({
     isLoading: false,
     listItems: [],
     // additional properties
-
+    imagenSelected: "~/images/logoActivity.png",
+    tallaSelected: "",
+    colorSelected: "Unico",
+    producto:[],
 });
 
 // START_CUSTOM_CODE_media

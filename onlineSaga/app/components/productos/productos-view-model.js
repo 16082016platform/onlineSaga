@@ -10,7 +10,7 @@ ViewModel = new Observable({
     isLoading: false,
     listItems: [],
     // additional properties
-
+    subcategoria: '',
 });
 
 // START_CUSTOM_CODE_productos

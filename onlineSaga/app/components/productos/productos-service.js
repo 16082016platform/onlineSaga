@@ -7,7 +7,7 @@ var _,
 
     consts;
 
-function Service() {}
+function Service() { }
 
 function onRequestSuccess(data) {
     return data.result;
@@ -18,12 +18,24 @@ function onRequestFail(err) {
     return err;
 }
 
-Service.prototype.getAllRecords = function(filter) {
+Service.prototype.getAllRecords = function (filter) {
     var expandExp,
         data = dataService.data('productos');
 
     expandExp = {
-
+        marca: {
+            "TargetTypeName": "marcas",
+            "ReturnAs": "marcaExpand",
+            "SingleField": "nombre",
+        },
+        imagen: {
+            'SingleField': 'Uri'
+        },
+        media: {
+            "TargetTypeName": "media",
+            "ReturnAs": "mediaExpand",
+            "SingleField": "valor",
+        },
     };
 
     return data.expand(expandExp).get(filter)

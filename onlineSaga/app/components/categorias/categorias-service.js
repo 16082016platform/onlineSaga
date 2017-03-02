@@ -24,6 +24,10 @@ Service.prototype.getAllRecords = function(filter) {
 
     expandExp = {
 
+        imagen: {
+            'SingleField': 'Uri'
+        },
+
     };
 
     return data.expand(expandExp).get(filter)

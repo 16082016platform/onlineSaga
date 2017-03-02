@@ -8,15 +8,30 @@ var isInit = true,
 
     viewModel = require('./productos-view-model');
 
+/*Mis vars*/
+var common = require('~/common.js');
+/* */
+
+exports.buttonBackTap = function () {
+    common.stopCount();
+    helpers.back();
+}
+exports.resetCount = function () {
+    common.resetCount();
+}
+
 function onListViewItemTap(args) {
-    var itemData = viewModel.get('listItems')[args.index];
+    var item = args.object;
+
+    var itemData = viewModel.get('listItems')[item.index];
 
     helpers.navigate({
         moduleName: 'components/media/media',
         context: {
             filter: {
                 producto: itemData.details.Id
-            }
+            },
+            producto: itemData.details
         }
     });
 }
@@ -24,7 +39,7 @@ exports.onListViewItemTap = onListViewItemTap;
 
 function flattenLocationProperties(dataItem) {
     var propName, propValue,
-        isLocation = function(value) {
+        isLocation = function (value) {
             return propValue && typeof propValue === 'object' &&
                 propValue.longitude && propValue.latitude;
         };
@@ -53,6 +68,7 @@ function pageLoaded(args) {
 
     function _fetchData() {
         var context = page.navigationContext;
+        viewModel.set('subcategoria', context.subcategoria.subcategoria);
 
         if (context && context.filter) {
             return service.getAllRecords(context.filter);
@@ -62,22 +78,23 @@ function pageLoaded(args) {
     };
 
     _fetchData()
-        .then(function(result) {
+        .then(function (result) {
             var itemsList = [];
-
-            result.forEach(function(item) {
+            var index = 0;
+            result.forEach(function (item) {
 
                 flattenLocationProperties(item);
-
                 itemsList.push({
-
                     header: item.nombre,
-
+                    index: index,
+                    image: item.imagen ? item.imagen : '~/images/logoActivity.png',
+                    precioDescuento: item.descuento > 0 ? (item.precio * (1 - (item.descuento / 100))).toFixed(2) : item.precio,
+                    colores: item.mediaExpand.length > 1 ? item.mediaExpand : [],
                     // singleItem properties
                     details: item
                 });
+                index++;
             });
-
             viewModel.set('listItems', itemsList);
             viewModel.set('isLoading', false);
         })
@@ -88,9 +105,9 @@ function pageLoaded(args) {
 
     if (isInit) {
         isInit = false;
-
         // additional pageInit
     }
+    common.startCount();
 }
 
 // START_CUSTOM_CODE_productos

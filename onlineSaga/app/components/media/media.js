@@ -8,6 +8,20 @@ var isInit = true,
 
     viewModel = require('./media-view-model');
 
+/*Mis vars*/
+var frameModule = require("ui/frame");
+var common = require('~/common.js');
+/* */
+
+exports.buttonBackTap = function(){
+    common.stopCount();
+    helpers.back();
+}
+exports.resetCount = function (){
+    common.resetCount();
+} 
+
+
 function onListViewItemTap(args) {
     var itemData = viewModel.get('listItems')[args.index];
 
@@ -20,7 +34,7 @@ exports.onListViewItemTap = onListViewItemTap;
 
 function flattenLocationProperties(dataItem) {
     var propName, propValue,
-        isLocation = function(value) {
+        isLocation = function (value) {
             return propValue && typeof propValue === 'object' &&
                 propValue.longitude && propValue.latitude;
         };
@@ -37,11 +51,18 @@ function flattenLocationProperties(dataItem) {
     }
 }
 // additional functions
-
+var page;
 function pageLoaded(args) {
-    var page = args.object;
+    page = args.object;
 
-    helpers.platformInit(page);
+    // helpers.platformInit(page); //para que no se vea el header
+    // Hide the iOS UINavigationBar so it doesn't get in the way of the animation
+    if (frameModule.topmost().ios) {
+        frameModule.topmost().ios.navBarVisibility = "never";
+    } else {
+        frameModule.topmost().android.navBarVisibility = "never";
+    }
+
     page.bindingContext = viewModel;
 
     viewModel.set('isLoading', true);
@@ -49,6 +70,8 @@ function pageLoaded(args) {
 
     function _fetchData() {
         var context = page.navigationContext;
+
+        viewModel.set('producto', context.producto);
 
         if (context && context.filter) {
             return service.getAllRecords(context.filter);
@@ -58,43 +81,96 @@ function pageLoaded(args) {
     };
 
     _fetchData()
-        .then(function(result) {
+        .then(function (result) {
             var itemsList = [];
 
-            result.forEach(function(item) {
+            result.forEach(function (item) {
 
                 flattenLocationProperties(item);
 
                 itemsList.push({
 
-                    icon: '\ue0dc', //globe
-
                     image: item.imagen,
-
-                    header: item.color,
 
                     // singleItem properties
                     details: item
                 });
             });
 
-            viewModel.set('listItems', itemsList);
-            viewModel.set('isLoading', false);
+            viewModel.set('tallaSelected', viewModel.get('producto').tallas[0]);
+            if (itemsList.length > 0) {
+                viewModel.set('colorSelected', itemsList[0].details.color);
+                (typeof (itemsList[0].image) !== undefined) ? viewModel.set('imagenSelected', itemsList[0].image) : viewModel.set('imagenSelected', "~/images/logoActivity.png");
+
+                viewModel.set('listItems', itemsList);
+                viewModel.set('isLoading', false);
+                page.getViewById("talla" + viewModel.get('tallaSelected')).cssClass = "tallaProductoSelected";
+                page.getViewById("color" + viewModel.get('colorSelected')).cssClass = "colorProductoSelected";
+            } else {
+                viewModel.set('listItems', itemsList);
+                viewModel.set('isLoading', false);
+                page.getViewById("talla" + viewModel.get('tallaSelected')).cssClass = "tallaProductoSelected";
+            }
+            
         })
         .catch(function onCatch() {
             viewModel.set('isLoading', false);
         });
     // additional pageLoaded
-
     if (isInit) {
         isInit = false;
-
         // additional pageInit
     }
+    common.startCount();
 }
-
-// START_CUSTOM_CODE_media
-// Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
-
-// END_CUSTOM_CODE_media
 exports.pageLoaded = pageLoaded;
+
+function selectImagen(args) {
+    var image = args.object;
+    page.getViewById("imagenGrande").src = image.src;
+}
+exports.selectImagen = selectImagen;
+
+function selectColor(args) {
+    var color = args.object;
+    args.object
+        .animate({
+            scale: { x: 0.8, y: 0.8 },
+            duration: 100
+        })
+        .then(function () {
+            page.getViewById("color" + viewModel.get('colorSelected')).cssClass = "colorProducto";
+            page.getViewById("imagenGrande").src = color.image;
+            return args.object.animate({
+                scale: { x: 1, y: 1 },
+                duration: 100
+            });
+        })
+        .then(function () {
+            viewModel.set('colorSelected', color.text);
+            page.getViewById("color" + color.text).cssClass = "colorProductoSelected";
+        });
+}
+exports.selectColor = selectColor;
+
+
+function selectTalla(args) {
+    var talla = args.object;
+    args.object
+        .animate({
+            scale: { x: 0.8, y: 0.8 },
+            duration: 100
+        })
+        .then(function () {
+            page.getViewById("talla" + viewModel.get('tallaSelected')).cssClass = "tallaProducto";
+            return args.object.animate({
+                scale: { x: 1, y: 1 },
+                duration: 100
+            });
+        })
+        .then(function () {
+            viewModel.set('tallaSelected', talla.text);
+            page.getViewById("talla" + talla.text).cssClass = "tallaProductoSelected";
+        });
+}
+exports.selectTalla = selectTalla;

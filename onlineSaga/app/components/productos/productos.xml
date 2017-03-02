@@ -1,39 +1,54 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:widgets="utils/widgets" loaded="pageLoaded" id="productosScreen" >
-    <Page.actionBar>
-        <widgets:action-bar />
-    </Page.actionBar>
-
-    <StackLayout>
-
-        <GridLayout rows="auto, *">
-
-            <ListView row="1" items="{{ listItems }}" itemTap="onListViewItemTap">
-                <ListView.itemTemplate>
-                    <StackLayout>
-                        <GridLayout columns="*" >
-
-                            <StackLayout col="2" >
-                                <Label col="0" text="{{ header }}" textWrap="true" />
-                            </StackLayout>
-
-                        </GridLayout>
-                        <!-- additional view content -->
-                    </StackLayout>
-                </ListView.itemTemplate>
-            </ListView>
-            <!--<ActivityIndicator row="1" busy="{{ isLoading }}" />-->
-            <GridLayout cssClass="activityIndicator" row="1" rows="*" visibility="{{isLoading ? 'visible' : 'collapsed'}}">
-                <StackLayout>
-                    <ActivityIndicator busy="true"/>
-                    <Label text="Cargando..." />
-                </StackLayout>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:widgets="utils/widgets" loaded="pageLoaded" id="productosScreen" tap="resetCount">
+    <ActionBar>
+        <ActionBar.titleView>
+            <GridLayout columns="auto, 5, *">
+            <Image src="~/images/logo.png"/>
+            <Label col="2" text="{{ subcategoria }}" minWidth="100" />
             </GridLayout>
+        </ActionBar.titleView>
+    </ActionBar>
+    <StackLayout>
+         <ScrollView height="93%">
+                <Repeater items="{{ listItems }}">
+                    <Repeater.itemsLayout>
+                        <WrapLayout />
+                    </Repeater.itemsLayout>
+                    <Repeater.itemTemplate>
+                        <GridLayout rows="*, auto" tap="onListViewItemTap" index="{{ index }}" padding="30%" width="49%">
+                            <Image src="{{ image }}" stretch="aspectFill" loadMode="async" />
+                            <StackLayout row="1" cssClass="recipeContainer">
+                                <Label text="{{ details.marcaExpand }}" cssClass="marcaProducto"/>
+                                <Label text="{{ header }}" cssClass="nombreProducto"/>
+                                <GridLayout columns="*,auto">
+                                    <Label text="{{ 'S/ ' + precioDescuento }}" cssClass="precioProducto"/>
+                                    <Label col="1" text="{{ 'Normal: S/ ' + details.precio }}" cssClass="precioRegular" visibility="{{ details.descuento>0?'visible':'collapsed'}}"/>
+                                </GridLayout>
+
+                                <Repeater items="{{ colores }}">
+                                    <Repeater.itemsLayout>
+                                        <WrapLayout style.horizontalAlignment="left" />
+                                    </Repeater.itemsLayout>
+                                    <Repeater.itemTemplate>
+                                        <Button color="{{ '#'+$value }}" backgroundColor="{{ '#'+$value }}" cssClass="colorProducto"/>
+                                    </Repeater.itemTemplate>
+                                </Repeater>
+                            </StackLayout>
+                        </GridLayout>
+                    </Repeater.itemTemplate>
+                </Repeater>
+            </ScrollView>
+        
+        <GridLayout cssClass="footer" height="7%" columns="*,*,*">
+            <StackLayout col="0">
+                <Image src="~/images/shopping-bag.png" tap="buttonBackTap" visibility="collapsed"/>
+            </StackLayout>
+            <StackLayout col="1">
+                <Image src="~/images/back.png" tap="buttonBackTap"/>
+            </StackLayout>
+            <StackLayout col="2">
+                <!--<Label text="Solicitar Prueba" cssClass="solicitarProducto" textWrap="true" tap="selectSolicitar" />-->
+            </StackLayout>
         </GridLayout>
-        <!-- additional view content -->
 
-        <!-- START_CUSTOM_CODE_productos -->
-        <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
-
-        <!-- END_CUSTOM_CODE_productos -->
     </StackLayout>
 </Page>

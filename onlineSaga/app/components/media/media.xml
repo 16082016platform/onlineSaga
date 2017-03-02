@@ -1,37 +1,120 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:widgets="utils/widgets" loaded="pageLoaded" id="mediaScreen" cssClass="screen">
-    <Page.actionBar>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:widgets="utils/widgets" loaded="pageLoaded" id="mediaScreen" tap="resetCount">
+    <!--<Page.actionBar>
         <widgets:action-bar />
-    </Page.actionBar>
-
+    </Page.actionBar>    -->
     <StackLayout>
-
-        <GridLayout rows="auto, *">
-
-            <ListView row="1" items="{{ listItems }}" itemTap="onListViewItemTap">
-                <ListView.itemTemplate>
-                    <StackLayout>
-                        <GridLayout columns="100, *" cssClass="padded-label">
-
-
-                            <Image col="0" width="100" height="100" src="{{ image }}" />
-
-
-                            <StackLayout col="2" cssClass="padded-label-stack">
-                                <Label col="1" text="{{ header }}" cssClass="title-label" textWrap="true" />
-                            </StackLayout>
-
-                        </GridLayout>
-                        <!-- additional view content -->
-                    </StackLayout>
-                </ListView.itemTemplate>
-            </ListView>
-            <ActivityIndicator row="1" busy="{{ isLoading }}" />
+        <GridLayout height="100%" cssClass="activityIndicator" rows="*" visibility="{{isLoading ? 'visible' : 'collapsed'}}">
+            <StackLayout>
+                <ActivityIndicator busy="true"/>
+                <Label text="Cargando..." />
+            </StackLayout>
         </GridLayout>
-        <!-- additional view content -->
 
-        <!-- START_CUSTOM_CODE_media -->
-        <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
+        <ScrollView height="93%">
+            <GridLayout rows="*,*,*,*,*,*">
+                <GridLayout row="1" columns="4*,*" cssClass="grid">
+                    <Image col="0" id="imagenGrande" src="{{ imagenSelected }}" loadMode="async" stretch="aspectFit"/>
+                    <Repeater col="1" items="{{ listItems }}">
+                        <Repeater.itemsLayout>
+                            <WrapLayout />
+                        </Repeater.itemsLayout>
+                        <Repeater.itemTemplate>
+                            <Image src="{{ image }}" tap="selectImagen" visibility="{{details.activo?'visible':'collapsed'}}" />
+                        </Repeater.itemTemplate>
+                    </Repeater>
+                </GridLayout>
 
-        <!-- END_CUSTOM_CODE_media -->
+                <!--<ListView row="1" items="{{ listItems }}" itemTap="onListViewItemTap">
+                    <ListView.itemTemplate>
+                        <StackLayout>
+                            <GridLayout columns="100, *" cssClass="padded-label">
+
+
+                                <Image col="0" width="100" height="100" src="{{ image }}" />
+
+
+                                <StackLayout col="2" cssClass="padded-label-stack">
+                                    <Label col="1" text="{{ header }}" cssClass="title-label" textWrap="true" />
+                                </StackLayout>
+
+                            </GridLayout>
+                        </StackLayout>
+                    </ListView.itemTemplate>
+                </ListView>-->
+
+
+                <GridLayout row="2" columns="*,auto" rows="*,*" cssClass="grid">
+                    <StackLayout col="0" row="0">
+                        <Label text="{{ producto.marcaExpand }}" cssClass="titulo"/>
+                        <Label text="{{ producto.nombre }}" cssClass="titulo" style.marginTop="0"/>
+                        <Label text="{{ 'Código de producto: ' + producto.codigo }}" style.fontWeight="bold" style.marginTop="0" style.marginBottom="30" />
+                    </StackLayout>
+                    <StackLayout col="1" row="0">
+                        <Label text="{{ 'S/ ' + producto.precio }}" cssClass="precioProducto"/>
+                        <!--<WrapLayout orientation="horizontal" style.horizontalAlignment="right" >
+                            <Image src="{{ puntuacion>=1? '~/images/start.png': '~/images/startDisabled.png' }}" loadMode="async" stretch="none"/>
+                            <Image src="{{ puntuacion>=2? '~/images/start.png': '~/images/startDisabled.png' }}" loadMode="async" stretch="none"/>
+                            <Image src="{{ puntuacion>=3? '~/images/start.png': '~/images/startDisabled.png' }}" loadMode="async" stretch="none"/>
+                            <Image src="{{ puntuacion>=4? '~/images/start.png': '~/images/startDisabled.png' }}" loadMode="async" stretch="none"/>
+                            <Image src="{{ puntuacion>=5? '~/images/start.png': '~/images/startDisabled.png' }}" loadMode="async" stretch="none"/>
+                        </WrapLayout>-->
+                    </StackLayout>
+                    <Label col="0" row="1" colSpan="2" text="{{ producto.descripcion }}" textWrap="true" style.marginBottom="30" style.marginTop="0" />
+                </GridLayout>
+
+                <GridLayout row="3" columns="*,*" cssClass="grid">
+                    <StackLayout col="0">
+                        <Label text="Tallas Disponibles" cssClass="titulo"/>
+                        <Repeater items="{{ producto.tallas }}">
+                            <Repeater.itemsLayout>
+                                <WrapLayout />
+                            </Repeater.itemsLayout>
+                            <Repeater.itemTemplate>
+                                <Button id="{{ 'talla'+$value }}"  text="{{ $value }}" margin="5" cssClass="tallaProducto" tap="selectTalla" />
+                            </Repeater.itemTemplate>
+                        </Repeater>
+                    </StackLayout>
+                    <StackLayout col="1" style.textAlignment="right">
+                        <Label text="Colores Disponibles" cssClass="titulo" />
+                        <Label id="nombreColor" text="{{ colorSelected }}" />
+                        <Repeater items="{{ listItems }}">
+                            <Repeater.itemsLayout style.horizontalAlignment="right">
+                                <WrapLayout style.horizontalAlignment="right" />
+                            </Repeater.itemsLayout>
+                            <Repeater.itemTemplate style.horizontalAlignment="right">
+                                <Button id="{{ 'color'+details.color }}" text="{{details.color}}" color="{{ '#'+details.valor }}" backgroundColor="{{ '#'+details.valor }}" image="{{ image }}" cssClass="colorProducto" tap="selectColor" visibility="{{details.valor?'visible':'collapsed'}}"/>
+                            </Repeater.itemTemplate>
+                        </Repeater>                    
+                    </StackLayout>
+                </GridLayout>
+
+
+                <GridLayout row="4" columns="auto,*" cssClass="grid">
+                    <StackLayout col="0" style.marginBottom="30">
+                        <Label text="Características"  cssClass="titulo" />
+                        <Label text="{{ producto.caracteristicas }}" textWrap="true" style.marginTop="0"/>
+                    </StackLayout>
+                    <!--<StackLayout col="1" style.horizontalAlignment="right" style.verticalAlignment="bottom">
+                        <Label text="Solicitar Prueba" cssClass="solicitarProducto" textWrap="true" tap="selectSolicitar" />
+                    </StackLayout>-->
+                </GridLayout>
+
+                <!--<ActivityIndicator row="1" busy="{{ isLoading }}" />-->
+            </GridLayout>
+        </ScrollView>
+        <GridLayout cssClass="footer" height="7%" columns="*,*,*">
+            <StackLayout col="0">
+                <!--<Image src="~/images/shopping-bag.png" tap="buttonBackTap"/>
+                <Label text="Agremas más"/>-->
+                <Label text="Agregar más" cssClass="solicitarProducto" textWrap="true" tap="agregarMas" />
+            </StackLayout>
+            <StackLayout col="1">
+                <Image src="~/images/back.png" tap="buttonBackTap"/>
+            </StackLayout>
+            <StackLayout col="2">
+                <Label text="Solicitar Prueba" cssClass="solicitarProducto" textWrap="true" tap="selectSolicitar" />
+            </StackLayout>
+        </GridLayout>
     </StackLayout>
+    
 </Page>

@@ -1,40 +1,45 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:widgets="utils/widgets" loaded="pageLoaded" id="subcategoriasScreen">
-    <Page.actionBar>
-        <widgets:action-bar />
-    </Page.actionBar>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:widgets="utils/widgets" loaded="pageLoaded" id="subcategoriasScreen" tap="resetCount">
+    <ActionBar>
+        <ActionBar.titleView>
+            <GridLayout columns="auto, 5, *">
+            <Image src="~/images/logo.png" />
+            <Label col="2" text="{{ categoria }}" minWidth="100" />
+            </GridLayout>
+        </ActionBar.titleView>
+    </ActionBar>
 
     <StackLayout>
-
-        <GridLayout rows="auto, *">
-
-            <ListView row="1" items="{{ listItems }}" itemTap="onListViewItemTap">
-                <ListView.itemTemplate>
-                    <StackLayout>
-                        <GridLayout columns="*">
-
-
-                            <StackLayout col="2">
-                                <Label col="0" text="{{ header }}"  textWrap="true" />
-                            </StackLayout>
-
-                        </GridLayout>
-                        <!-- additional view content -->
-                    </StackLayout>
-                </ListView.itemTemplate>
-            </ListView>
-            <!--<ActivityIndicator row="1" busy="{{ isLoading }}" />-->
-            <GridLayout cssClass="activityIndicator" row="1" rows="*" visibility="{{isLoading ? 'visible' : 'collapsed'}}">
-                <StackLayout>
-                    <ActivityIndicator busy="true"/>
-                    <Label text="Cargando..." />
-                </StackLayout>
-            </GridLayout>
+        <GridLayout height="100%" cssClass="activityIndicator" rows="*" visibility="{{isLoading ? 'visible' : 'collapsed'}}">
+            <StackLayout>
+                <ActivityIndicator busy="true"/>
+                <Label text="Cargando..." />
+            </StackLayout>
         </GridLayout>
-        <!-- additional view content -->
-
-        <!-- START_CUSTOM_CODE_subcategorias -->
-        <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
-
-        <!-- END_CUSTOM_CODE_subcategorias -->
+        <ScrollView height="93%">
+            <Repeater items="{{ listItems }}" verticalAlignment="middle">
+                <Repeater.itemsLayout >
+                    <WrapLayout />
+                </Repeater.itemsLayout>
+                <Repeater.itemTemplate >
+                    <GridLayout rows="auto" tap="onListViewItemTap" index="{{ index }}" padding="30%" width="49%">
+                        <StackLayout>
+                            <Label text="{{ header }}" textWrap="true"/>
+                        </StackLayout> 
+                    </GridLayout>                                
+                </Repeater.itemTemplate>
+            </Repeater>
+        </ScrollView> 
+        
+         <GridLayout cssClass="footer" height="7%" columns="*,*,*">
+            <StackLayout col="0">
+                <Image src="~/images/shopping-bag.png" tap="buttonBackTap" visibility="collapsed"/>
+            </StackLayout>
+            <StackLayout col="1">
+                <Image src="~/images/back.png" tap="buttonBackTap"/>
+            </StackLayout>
+            <StackLayout col="2">
+                <!--<Label text="Solicitar Prueba" cssClass="solicitarProducto" textWrap="true" tap="selectSolicitar" />-->
+            </StackLayout>
+        </GridLayout>          
     </StackLayout>
 </Page>

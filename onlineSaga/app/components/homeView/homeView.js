@@ -1,27 +1,27 @@
-'use strict';
-var isInit = true,
-    helpers = require('../../utils/widgets/helper'),
-    navigationProperty = require('../../utils/widgets/navigation-property'),
-    // additional requires
-    viewModel = require('./homeView-view-model');
+var helpers = require('../../utils/widgets/helper');
 
-// additional functions
+var frameModule = require("ui/frame");
+
 function pageLoaded(args) {
     var page = args.object;
 
-    helpers.platformInit(page);
-    page.bindingContext = viewModel;
-    // additional pageLoaded
-
-    if (isInit) {
-        isInit = false;
-
-        // additional pageInit
+    // helpers.platformInit(page); //para que no se vea el header
+    // Hide the iOS UINavigationBar so it doesn't get in the way of the animation
+    if (frameModule.topmost().ios) {
+        frameModule.topmost().ios.navBarVisibility = "never";
+    } else {
+        frameModule.topmost().android.navBarVisibility = "never";
     }
+    
 }
-
-// START_CUSTOM_CODE_homeView
-// Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
-
-// END_CUSTOM_CODE_homeView
 exports.pageLoaded = pageLoaded;
+
+exports.goToCategorias = function (args) {
+    helpers.navigate({
+        moduleName: "components/categorias/categorias",
+        animated: true,
+        transition: {
+            name: "slide"
+        },
+    });
+}

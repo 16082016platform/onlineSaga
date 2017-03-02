@@ -8,14 +8,44 @@ var isInit = true,
 
     viewModel = require('./subcategorias-view-model');
 
-function onListViewItemTap(args) {
-    var itemData = viewModel.get('listItems')[args.index];
+/*Mis vars*/
+var common = require('~/common.js');
+/* */
 
+exports.buttonBackTap = function(){
+    common.stopCount();
+    helpers.back();
+}
+exports.resetCount = function (){
+    common.resetCount();
+}   
+
+function onListViewItemTap(args) {
+    // var itemData = viewModel.get('listItems')[args.index];
+    // helpers.navigate({
+    //     moduleName: 'components/productos/productos',
+    //     context: {
+    //         filter: {
+    //             subcategoria: itemData.details.Id
+    //         }
+    //     }
+    // });
+
+    // stopCount();
+    var item = args.object;
+    var itemData = viewModel.get('listItems')[item.index];
     helpers.navigate({
         moduleName: 'components/productos/productos',
+        animated: true,
+        transition: {
+            name: "slide"
+        },
         context: {
             filter: {
                 subcategoria: itemData.details.Id
+            },
+            subcategoria: {
+                subcategoria: itemData.details.nombre
             }
         }
     });
@@ -24,7 +54,7 @@ exports.onListViewItemTap = onListViewItemTap;
 
 function flattenLocationProperties(dataItem) {
     var propName, propValue,
-        isLocation = function(value) {
+        isLocation = function (value) {
             return propValue && typeof propValue === 'object' &&
                 propValue.longitude && propValue.latitude;
         };
@@ -53,6 +83,7 @@ function pageLoaded(args) {
 
     function _fetchData() {
         var context = page.navigationContext;
+        viewModel.set('categoria', context.categoria.categoria);
 
         if (context && context.filter) {
             return service.getAllRecords(context.filter);
@@ -62,10 +93,10 @@ function pageLoaded(args) {
     };
 
     _fetchData()
-        .then(function(result) {
+        .then(function (result) {
             var itemsList = [];
-
-            result.forEach(function(item) {
+            var index = 0;
+            result.forEach(function (item) {
 
                 flattenLocationProperties(item);
 
@@ -73,9 +104,11 @@ function pageLoaded(args) {
 
                     header: item.nombre,
 
+                    index: index,
                     // singleItem properties
                     details: item
                 });
+                index++;
             });
 
             viewModel.set('listItems', itemsList);
@@ -88,13 +121,8 @@ function pageLoaded(args) {
 
     if (isInit) {
         isInit = false;
-
         // additional pageInit
     }
+    common.startCount();
 }
-
-// START_CUSTOM_CODE_subcategorias
-// Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
-
-// END_CUSTOM_CODE_subcategorias
 exports.pageLoaded = pageLoaded;

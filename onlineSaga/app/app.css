@@ -1,23 +1,15 @@
-.km-icon {
-    font-family: 'kendoui';
-    vertical-align: center;
-    horizontal-align: center;
+ActionBar {
+    background-color: #b2c804;
+    color: white;
+    text-align: center;
+    font-weight: bold;
 }
 
-page {
-    background-color: #fff;
+.activityIndicator {
+    background-color: #ffffff;
 }
 
-button {
-    horizontal-align: stretch;
-}
-
-image{
-    horizontal-align: center;
-    vertical-align: center;
-}
-
-.activityIndicator StackLayout{
+.activityIndicator StackLayout {
     horizontal-align: center;
     vertical-align: center;
     color: #ffffff;
@@ -28,94 +20,24 @@ image{
     text-align: center;
 }
 
-label,
-textfield,
-searchbar,
-switch {
-    vertical-align: center;
+
+.footer {
+    background-color: #f7f7f7;
+    padding-top: 5;
+    border-top-width: 50;
+    border-top-style: solid;
+    border-top-color: red;
 }
 
-switch {
-    horizontal-align: right;
+.footer StackLayout {
+    vertical-align: middle;
 }
 
-.form-item {
-    padding: 0 12;
-}
-
-.form-label {
-    margin-left: 12;
-}
-
-.form-field {
-    margin: 6 12 6 0;
-}
-
-.form-buttons {
-    padding: 0 6;
-}
-
-.form-link {
-    horizontal-align: center;
-    font-size: 18;
-    margin-top: 10;
-}
-
-.form-item-border {
-    background-color: #ccc;
-    vertical-align: bottom;
-    height: 1;
-}
-
-.ios-form-button {
-    margin: 12 6;
-}
-
-.title {
-    font-size: 30;
-    horizontal-align: center;
-    margin: 20;
-}
-
-.message {
-    font-size: 20;
-    color: #284848;
-    horizontal-align: center;
-}
-
-
-.about-image {
-    horizontal-align: left;
-    vertical-align: top;
-    height: 100;
-    margin-right: 10;
-}
-
-.list-item {
-    padding: 10 16;
-}
-
-.list-icon {
-    width: 36;
+.footer StackLayout .solicitarProducto {
+    font-size: 15;
+    color: white;
+    background-color: #b2c804;
+    padding: 5;
     text-align: center;
+    margin: 0 5 0 5;
 }
-
-
-/*Alignment*/
-
-.image-field {
-    height: 50;
-    vertical-align: center;
-}
-.alignment-left {
-    horizontal-align: left;
-}
-.alignment-center {
-    horizontal-align: center;
-}
-.alignment-right {
-    horizontal-align: right;
-}
-/* START_CUSTOM_CODE_nativeScriptApp */
-/* Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes */
-/* END_CUSTOM_CODE_nativeScriptApp */
