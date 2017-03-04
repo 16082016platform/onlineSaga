@@ -1,0 +1,54 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:widgets="utils/widgets" loaded="pageLoaded" id="pedidosScreen" tap="resetCount">
+    <ActionBar>
+        <ActionBar.titleView>
+            <GridLayout columns="auto, 5, *">
+                <Image src="~/images/logo.png"/>
+                <Label col="2" text="Pedidos" minWidth="100" />
+            </GridLayout>
+        </ActionBar.titleView> 
+    </ActionBar>
+
+    <StackLayout>
+        <GridLayout rows="auto, *, auto">
+
+            <ListView row="1" items="{{ listItems }}">
+                <ListView.itemTemplate>
+                    <StackLayout>
+                    	<GridLayout columns="*, 3*">
+                        	<Image col="0" src="{{ producto.imagen }}" />
+                            <GridLayout col="2" columns="3*,*" rows="*,*,*,*,*" >
+                            	<Label row="0" col="0" colSpan="2" text="{{ producto.marcaExpand }}" textWrap="true" cssClass="titulo" />
+                                <Label row="1" col="0" colSpan="2" text="{{ producto.nombre }}" textWrap="true" cssClass="titulo" style.fontWeight="normal" />
+                                <Label row="2" col="0" text="{{ index }}" textWrap="true" />
+                                <Label row="3" col="0" text="{{ 'Color: ' + nombreColor }}" textWrap="true" />
+                                <Label row="4" col="0" text="{{ 'Talla: ' + talla }}" textWrap="true" />
+                                <Image row="2" col="1" rowSpan="3" src="~/images/trash.png" stretch="aspectFit" horizontalAlignment="center" verticalAlignment="bottom"  cssClass="trash" tap="eliminarProducto"/>
+                            </GridLayout>
+                        </GridLayout>
+                    </StackLayout>
+                </ListView.itemTemplate>
+            </ListView>
+
+            <GridLayout cssClass="activityIndicator" row="1" rows="*" visibility="{{isLoading ? 'visible' : 'collapsed'}}">
+                <StackLayout>
+                    <ActivityIndicator busy="true"/>
+                    <Label text="Cargando..." />
+                </StackLayout>
+            </GridLayout>
+
+            <GridLayout row="2" cssClass="footer" height="7%" columns="*,*,*">
+                <StackLayout col="0">
+                    <!--<Label text="Agregar más" cssClass="solicitarProducto" textWrap="true" tap="buttonBackTap" />-->
+                </StackLayout>
+                <StackLayout col="1">
+                    <Image src="~/images/back.png" tap="buttonBackTap"/>
+                </StackLayout>
+                <StackLayout col="2">
+                    <Label text="Confirmar" cssClass="solicitarProducto" textWrap="true" tap="confirmarSolicitud" />
+                </StackLayout>
+            </GridLayout>
+
+        </GridLayout>
+    </StackLayout>
+
+</Page>

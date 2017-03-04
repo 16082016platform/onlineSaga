@@ -12,7 +12,7 @@ ViewModel = new Observable({
     // additional properties
     imagenSelected: "~/images/logoActivity.png",
     tallaSelected: "",
-    colorSelected: "Unico",
+    colorSelected: "",
     producto:[],
 });
 

@@ -21,7 +21,7 @@
                 	<WrapLayout />
                 </Repeater.itemsLayout>
                 <Repeater.itemTemplate >
-                    <GridLayout rows="*, auto" tap="onListViewItemTap" index="{{ index }}" padding="30%" width="49%" >
+                    <GridLayout rows="*, auto" tap="onListViewItemTap" index="{{ index }}" >
                 	    <Image row="0" src="{{ image }}" loadMode="async" stretch="aspectFill"/>
                         <StackLayout row="1" cssClass="recipeContainer">
                             <Label text="{{ header }}"  textWrap="true"/> 

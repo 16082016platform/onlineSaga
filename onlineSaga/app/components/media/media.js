@@ -11,15 +11,16 @@ var isInit = true,
 /*Mis vars*/
 var frameModule = require("ui/frame");
 var common = require('~/common.js');
+var vmPedidos = require('../pedidos/pedidos-view-model');
 /* */
 
-exports.buttonBackTap = function(){
+exports.buttonBackTap = function () {
     common.stopCount();
     helpers.back();
 }
-exports.resetCount = function (){
+exports.resetCount = function () {
     common.resetCount();
-} 
+}
 
 
 function onListViewItemTap(args) {
@@ -100,18 +101,20 @@ function pageLoaded(args) {
             viewModel.set('tallaSelected', viewModel.get('producto').tallas[0]);
             if (itemsList.length > 0) {
                 viewModel.set('colorSelected', itemsList[0].details.color);
-                (typeof (itemsList[0].image) !== undefined) ? viewModel.set('imagenSelected', itemsList[0].image) : viewModel.set('imagenSelected', "~/images/logoActivity.png");
 
+                viewModel.set('imagenSelected', itemsList[0].image)
                 viewModel.set('listItems', itemsList);
                 viewModel.set('isLoading', false);
                 page.getViewById("talla" + viewModel.get('tallaSelected')).cssClass = "tallaProductoSelected";
                 page.getViewById("color" + viewModel.get('colorSelected')).cssClass = "colorProductoSelected";
             } else {
+                viewModel.set('imagenSelected', "~/images/logoActivity.png");
+                viewModel.set('colorSelected', "");
                 viewModel.set('listItems', itemsList);
                 viewModel.set('isLoading', false);
                 page.getViewById("talla" + viewModel.get('tallaSelected')).cssClass = "tallaProductoSelected";
             }
-            
+
         })
         .catch(function onCatch() {
             viewModel.set('isLoading', false);
@@ -174,3 +177,33 @@ function selectTalla(args) {
         });
 }
 exports.selectTalla = selectTalla;
+
+
+exports.agregarMas = function () {
+    vmPedidos.listItems.unshift({
+        producto: viewModel.get('producto'),
+        talla: viewModel.get('tallaSelected'),
+        nombreColor: viewModel.get('colorSelected'),
+        color: (viewModel.get('colorSelected') == "") ? "" : page.getViewById("color" + viewModel.get('colorSelected')).valor,
+        index: vmPedidos.listItems.length,
+    });
+    common.stopCount();
+    helpers.back();
+}
+
+exports.selectSolicitar = function () {
+    vmPedidos.listItems.unshift({
+        producto: viewModel.get('producto'),
+        talla: viewModel.get('tallaSelected'),
+        nombreColor: viewModel.get('colorSelected'),
+        color: (viewModel.get('colorSelected') == "") ? "" : page.getViewById("color" + viewModel.get('colorSelected')).valor,
+        index: vmPedidos.listItems.length,
+    });
+    helpers.navigate({
+        moduleName: 'components/pedidos/pedidos',
+        animated: true,
+        transition: {
+            name: "slide"
+        }
+    });
+}

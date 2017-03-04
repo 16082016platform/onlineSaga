@@ -1,0 +1,16 @@
+WrapLayout GridLayout {
+    border-width: 1;
+    border-style: solid;
+    border-color: #d8d8d8;
+
+    padding: 30%;
+    margin: 60  0 0 5%;
+    width: 42.5%;
+}
+
+WrapLayout GridLayout Label{
+    vertical-align: middle;
+    text-align: center;
+ 	font-size: 30;
+    font-weight: bold;
+}

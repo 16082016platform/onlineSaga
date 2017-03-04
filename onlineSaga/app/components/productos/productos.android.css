@@ -1,0 +1,50 @@
+.nombreProducto {
+    font-size: 20;
+    color: #000000;
+}
+
+.marcaProducto {
+    font-size: 20;
+    font-weight: bold;
+    color: #000000;
+}
+
+.precioProducto {
+    font-size: 30;
+    font-weight: bold;
+    color: #CC0000;
+    vertical-align: bottom;
+}
+
+Repeater GridLayout.contenedor {
+    border-width: 1;
+    border-style: solid;
+    border-color: #d8d8d8;
+    padding: 30%;
+    margin: 50 0 0 4%;
+    width: 28%;
+}
+
+Repeater GridLayout GridLayout {
+    border-width: 0;
+    border-style: solid;
+    border-color: #ffffff;
+}
+
+.precioRegular {
+    font-weight: normal;
+    font-size: 15;
+    color: #666666;
+    text-align: right;
+    vertical-align: bottom;
+}
+
+.colorProducto {
+    width: 30;
+    height: 30;
+    border-width: 1;
+    border-color: white;
+    padding-bottom: 0;
+    margin: 5 5 0 0;
+    text-align: left;
+}

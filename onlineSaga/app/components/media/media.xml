@@ -82,7 +82,7 @@
                                 <WrapLayout style.horizontalAlignment="right" />
                             </Repeater.itemsLayout>
                             <Repeater.itemTemplate style.horizontalAlignment="right">
-                                <Button id="{{ 'color'+details.color }}" text="{{details.color}}" color="{{ '#'+details.valor }}" backgroundColor="{{ '#'+details.valor }}" image="{{ image }}" cssClass="colorProducto" tap="selectColor" visibility="{{details.valor?'visible':'collapsed'}}"/>
+                                <Button id="{{ 'color'+details.color }}" text="{{details.color}}" color="{{ '#'+details.valor }}" backgroundColor="{{ '#'+details.valor }}" valor="{{ details.valor }}" image="{{ image }}" cssClass="colorProducto" tap="selectColor" visibility="{{details.valor?'visible':'collapsed'}}"/>
                             </Repeater.itemTemplate>
                         </Repeater>                    
                     </StackLayout>

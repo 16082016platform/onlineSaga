@@ -1,5 +1,7 @@
 var helpers = require('./utils/widgets/helper');
 
+var producto=[];
+
 exports.resetCount = function () {
     c = 0;
 }
@@ -20,7 +22,7 @@ var c = 0, t, timer_is_on = 0;
 function timedCount() {
     c++;
     t = setTimeout(function () { timedCount() }, 1000);
-    if (c == 10) {
+    if (c == 60) {
         c = 0;
         clearCount();
         goToInicio();

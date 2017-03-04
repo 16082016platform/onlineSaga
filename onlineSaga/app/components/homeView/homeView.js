@@ -12,7 +12,7 @@ function pageLoaded(args) {
     } else {
         frameModule.topmost().android.navBarVisibility = "never";
     }
-    
+
 }
 exports.pageLoaded = pageLoaded;
 

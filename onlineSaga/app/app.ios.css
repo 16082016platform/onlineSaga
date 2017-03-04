@@ -32,12 +32,3 @@ ActionBar {
 .footer StackLayout {
     vertical-align: middle;
 }
-
-.footer StackLayout .solicitarProducto {
-    font-size: 15;
-    color: white;
-    background-color: #b2c804;
-    padding: 5;
-    text-align: center;
-    margin: 0 5 0 5;
-}

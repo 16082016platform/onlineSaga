@@ -8,18 +8,24 @@
         </ActionBar.titleView>
     </ActionBar>
     <StackLayout>
+        <GridLayout height="100%" cssClass="activityIndicator" rows="*" visibility="{{isLoading ? 'visible' : 'collapsed'}}">
+            <StackLayout>
+                <ActivityIndicator busy="true"/>
+                <Label text="Cargando..." />
+            </StackLayout>
+        </GridLayout>
          <ScrollView height="93%">
                 <Repeater items="{{ listItems }}">
                     <Repeater.itemsLayout>
                         <WrapLayout />
                     </Repeater.itemsLayout>
                     <Repeater.itemTemplate>
-                        <GridLayout rows="*, auto" tap="onListViewItemTap" index="{{ index }}" padding="30%" width="49%">
+                        <GridLayout rows="*, auto" tap="onListViewItemTap" index="{{ index }}" cssClass="contenedor" >
                             <Image src="{{ image }}" stretch="aspectFill" loadMode="async" />
-                            <StackLayout row="1" cssClass="recipeContainer">
+                            <StackLayout row="1">
                                 <Label text="{{ details.marcaExpand }}" cssClass="marcaProducto"/>
                                 <Label text="{{ header }}" cssClass="nombreProducto"/>
-                                <GridLayout columns="*,auto">
+                                <GridLayout columns="auto,*">
                                     <Label text="{{ 'S/ ' + precioDescuento }}" cssClass="precioProducto"/>
                                     <Label col="1" text="{{ 'Normal: S/ ' + details.precio }}" cssClass="precioRegular" visibility="{{ details.descuento>0?'visible':'collapsed'}}"/>
                                 </GridLayout>

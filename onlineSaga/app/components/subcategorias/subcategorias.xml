@@ -21,10 +21,8 @@
                     <WrapLayout />
                 </Repeater.itemsLayout>
                 <Repeater.itemTemplate >
-                    <GridLayout rows="auto" tap="onListViewItemTap" index="{{ index }}" padding="30%" width="49%">
-                        <StackLayout>
-                            <Label text="{{ header }}" textWrap="true"/>
-                        </StackLayout> 
+                    <GridLayout rows="auto" tap="onListViewItemTap" index="{{ index }}">
+                        <Label text="{{ header }}" textWrap="true"/>
                     </GridLayout>                                
                 </Repeater.itemTemplate>
             </Repeater>

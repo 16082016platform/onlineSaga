@@ -3,27 +3,27 @@ ActionBar {
 }
 
 ScrollView Label {
-    font-size: 12;
-    margin: 5 5 0 5;
+    font-size: 20;
+    margin: 5 5 0 30;
     color: #999999;
 }
 
 .titulo {
-    font-size: 17;
+    font-size: 30;
     font-weight: bold;
     color: #000000;
-    margin: 5 5 0 5;
+    margin: 30 30 0 30;
 }
 
 .grid {
     border-width: 1;
     border-style: solid;
     border-color: #d8d8d8;
-    margin: 5 5 0 5;
+    margin: 30 30 0 30;
 }
 
 .grid Repeater Image {
-    margin: 5;
+    margin: 30;
     border-width: 1;
     border-style: solid;
     border-color: #d8d8d8;
@@ -32,7 +32,7 @@ ScrollView Label {
 .precioProducto {
     color: #cc0000;
     font-weight: bold;
-    font-size: 30;
+    font-size: 100;
     margin: 0;
     text-align: right;
 }
@@ -41,8 +41,8 @@ ScrollView Label {
     background-color: white;
     border-color: #555555;
     border-style: solid;
-    border-width: 1;
-    width: 40;
+    border-width: 2;
+    height: 50;
     color: #000000;
 }
 
@@ -50,25 +50,27 @@ ScrollView Label {
     background-color: #b2c804;
     border-color: #b2c804;
     border-style: solid;
-    border-width: 3;
+    border-width: 5;
     font-weight: bold;
-    width: 40;
     color: #ffffff;
 }
 
 .colorProducto {
-    width: 30;
-    height: 30;
+    width: 50;
+    height: 50;
     border-width: 1;
     border-color: white;
-    margin-bottom: 20;
+    border-radius: 100;
+    margin:10;
 }
 
 .colorProductoSelected {
-    width: 40;
-    height: 40;
+    width: 75;
+    height: 75;
     border-width: 1;
     border-color: white;
+    border-radius: 100;
+    margin:10;
 }
 
 .footer {
@@ -83,12 +85,11 @@ ScrollView Label {
     vertical-align: middle;
 }
 
-
 .footer StackLayout .solicitarProducto {
-    font-size: 15;
+    font-size: 50;
     color: white;
     background-color: #b2c804;
     padding: 5;
     text-align: center;
-    margin: 0 5 0 5;
+    margin: 0 30 0 30; 
 }
