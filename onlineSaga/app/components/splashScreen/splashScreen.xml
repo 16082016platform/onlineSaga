@@ -1,0 +1,8 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:widgets="utils/widgets" loaded="pageLoaded" id="splashScreen">
+    <Page.actionBar>
+        <widgets:action-bar />
+    </Page.actionBar>
+
+    <Label text="En breves mometos se entregará su pedido" textWrap="true" verticalAlignment="middle" android:fontSize="100" margin="13%" />
+        
+</Page>

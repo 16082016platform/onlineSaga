@@ -15,6 +15,8 @@ var vmPedidos = require('../pedidos/pedidos-view-model');
 /* */
 
 exports.buttonBackTap = function () {
+    viewModel.set('tallaSelected', '');
+    viewModel.set('colorSelected', '');
     common.stopCount();
     helpers.back();
 }
@@ -55,7 +57,6 @@ function flattenLocationProperties(dataItem) {
 var page;
 function pageLoaded(args) {
     page = args.object;
-
     // helpers.platformInit(page); //para que no se vea el header
     // Hide the iOS UINavigationBar so it doesn't get in the way of the animation
     if (frameModule.topmost().ios) {
@@ -64,62 +65,96 @@ function pageLoaded(args) {
         frameModule.topmost().android.navBarVisibility = "never";
     }
 
+    var context = page.navigationContext;
+    viewModel.set('producto', context.producto);
+
+    var itemsList = viewModel.get('listItems');
+    var menor = -1;
+    for (var i = 0; i < itemsList.length; i++) {
+        if (context.producto.Id == itemsList[i].details.producto && itemsList[i].details.activo) {
+            itemsList[i].details.visible = true;
+            menor == -1 ? menor = i : menor;
+        } else {
+            itemsList[i].details.visible = false;
+        }
+    }
+
     page.bindingContext = viewModel;
 
-    viewModel.set('isLoading', true);
-    viewModel.set('listItems', []);
+    if (viewModel.get('tallaSelected') == '') {
+        viewModel.set('tallaSelected', viewModel.get('producto').tallas[0]);
+    }
 
-    function _fetchData() {
-        var context = page.navigationContext;
+    if (menor > -1) {
+        viewModel.set('colorSelected', itemsList[menor].details.color);
 
-        viewModel.set('producto', context.producto);
+        viewModel.set('imagenSelected', itemsList[menor].image)
+        viewModel.set('listItems', itemsList);
+        viewModel.set('isLoading', false);
+        page.getViewById("talla" + viewModel.get('tallaSelected')).cssClass = "tallaProductoSelected";
+        page.getViewById("color" + viewModel.get('colorSelected')).cssClass = "colorProductoSelected";
+    } else {
+        viewModel.set('imagenSelected', "~/images/logoActivity.png");
+        viewModel.set('colorSelected', "");
+        viewModel.set('listItems', itemsList);
+        viewModel.set('isLoading', false);
+        page.getViewById("talla" + viewModel.get('tallaSelected')).cssClass = "tallaProductoSelected";
+    }
 
-        if (context && context.filter) {
-            return service.getAllRecords(context.filter);
-        }
 
-        return service.getAllRecords();
-    };
+    // viewModel.set('isLoading', true);
+    // viewModel.set('listItems', []);
+    // function _fetchData() {
+    //     var context = page.navigationContext;
 
-    _fetchData()
-        .then(function (result) {
-            var itemsList = [];
+    //     viewModel.set('producto', context.producto);
 
-            result.forEach(function (item) {
+    //     if (context && context.filter) {
+    //         return service.getAllRecords(context.filter);
+    //     }
 
-                flattenLocationProperties(item);
+    //     return service.getAllRecords();
+    // };
 
-                itemsList.push({
+    // _fetchData()
+    //     .then(function (result) {
+    //         var itemsList = [];
 
-                    image: item.imagen,
+    //         result.forEach(function (item) {
 
-                    // singleItem properties
-                    details: item
-                });
-            });
+    //             flattenLocationProperties(item);
 
-            viewModel.set('tallaSelected', viewModel.get('producto').tallas[0]);
-            if (itemsList.length > 0) {
-                viewModel.set('colorSelected', itemsList[0].details.color);
+    //             itemsList.push({
 
-                viewModel.set('imagenSelected', itemsList[0].image)
-                viewModel.set('listItems', itemsList);
-                viewModel.set('isLoading', false);
-                page.getViewById("talla" + viewModel.get('tallaSelected')).cssClass = "tallaProductoSelected";
-                page.getViewById("color" + viewModel.get('colorSelected')).cssClass = "colorProductoSelected";
-            } else {
-                viewModel.set('imagenSelected', "~/images/logoActivity.png");
-                viewModel.set('colorSelected', "");
-                viewModel.set('listItems', itemsList);
-                viewModel.set('isLoading', false);
-                page.getViewById("talla" + viewModel.get('tallaSelected')).cssClass = "tallaProductoSelected";
-            }
+    //                 image: item.imagen,
 
-        })
-        .catch(function onCatch() {
-            viewModel.set('isLoading', false);
-        });
-    // additional pageLoaded
+    //                 // singleItem properties
+    //                 details: item
+    //             });
+    //         });
+
+    //         viewModel.set('tallaSelected', viewModel.get('producto').tallas[0]);
+    //         if (itemsList.length > 0) {
+    //             viewModel.set('colorSelected', itemsList[0].details.color);
+
+    //             viewModel.set('imagenSelected', itemsList[0].image)
+    //             viewModel.set('listItems', itemsList);
+    //             viewModel.set('isLoading', false);
+    //             page.getViewById("talla" + viewModel.get('tallaSelected')).cssClass = "tallaProductoSelected";
+    //             page.getViewById("color" + viewModel.get('colorSelected')).cssClass = "colorProductoSelected";
+    //         } else {
+    //             viewModel.set('imagenSelected', "~/images/logoActivity.png");
+    //             viewModel.set('colorSelected', "");
+    //             viewModel.set('listItems', itemsList);
+    //             viewModel.set('isLoading', false);
+    //             page.getViewById("talla" + viewModel.get('tallaSelected')).cssClass = "tallaProductoSelected";
+    //         }
+
+    //     })
+    //     .catch(function onCatch() {
+    //         viewModel.set('isLoading', false);
+    //     });
+    // // additional pageLoaded
     if (isInit) {
         isInit = false;
         // additional pageInit
@@ -185,20 +220,36 @@ exports.agregarMas = function () {
         talla: viewModel.get('tallaSelected'),
         nombreColor: viewModel.get('colorSelected'),
         color: (viewModel.get('colorSelected') == "") ? "" : page.getViewById("color" + viewModel.get('colorSelected')).valor,
-        index: vmPedidos.listItems.length,
+
     });
     common.stopCount();
     helpers.back();
 }
 
+var observable = require('data/observable');
+var observableArray = require('data/observable-array');
 exports.selectSolicitar = function () {
+
+    // new vmPedidos.ListItem(
+    //     viewModel.get('producto'),
+    //     viewModel.get('tallaSelected'),
+    //     viewModel.get('colorSelected'),
+    //     (viewModel.get('colorSelected') == "") ? "" : page.getViewById("color" + viewModel.get('colorSelected')).valor
+    // );
+
     vmPedidos.listItems.unshift({
         producto: viewModel.get('producto'),
         talla: viewModel.get('tallaSelected'),
         nombreColor: viewModel.get('colorSelected'),
         color: (viewModel.get('colorSelected') == "") ? "" : page.getViewById("color" + viewModel.get('colorSelected')).valor,
-        index: vmPedidos.listItems.length,
     });
+
+    // vmPedidos.listItems.unshift({
+    //     producto: viewModel.get('producto'),
+    //     talla: viewModel.get('tallaSelected'),
+    //     nombreColor: viewModel.get('colorSelected'),
+    //     color: (viewModel.get('colorSelected') == "") ? "" : page.getViewById("color" + viewModel.get('colorSelected')).valor,
+    // });
     helpers.navigate({
         moduleName: 'components/pedidos/pedidos',
         animated: true,

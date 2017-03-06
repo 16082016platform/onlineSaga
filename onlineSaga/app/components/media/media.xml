@@ -19,7 +19,7 @@
                             <WrapLayout />
                         </Repeater.itemsLayout>
                         <Repeater.itemTemplate>
-                            <Image src="{{ image }}" tap="selectImagen" visibility="{{details.activo?'visible':'collapsed'}}" />
+                            <Image src="{{ image }}" tap="selectImagen" visibility="{{details.visible?'visible':'collapsed'}}" />
                         </Repeater.itemTemplate>
                     </Repeater>
                 </GridLayout>

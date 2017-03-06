@@ -8,21 +8,28 @@
         </ActionBar.titleView> 
     </ActionBar>
 
-    <StackLayout>
+    <StackLayout id="contenedor">
         <GridLayout rows="auto, *, auto">
 
-            <ListView row="1" items="{{ listItems }}">
+            <ListView row="1" items="{{ listItems }}" id="lista">
                 <ListView.itemTemplate>
                     <StackLayout>
                     	<GridLayout columns="*, 3*">
-                        	<Image col="0" src="{{ producto.imagen }}" />
-                            <GridLayout col="2" columns="3*,*" rows="*,*,*,*,*" >
-                            	<Label row="0" col="0" colSpan="2" text="{{ producto.marcaExpand }}" textWrap="true" cssClass="titulo" />
-                                <Label row="1" col="0" colSpan="2" text="{{ producto.nombre }}" textWrap="true" cssClass="titulo" style.fontWeight="normal" />
-                                <Label row="2" col="0" text="{{ index }}" textWrap="true" />
-                                <Label row="3" col="0" text="{{ 'Color: ' + nombreColor }}" textWrap="true" />
-                                <Label row="4" col="0" text="{{ 'Talla: ' + talla }}" textWrap="true" />
-                                <Image row="2" col="1" rowSpan="3" src="~/images/trash.png" stretch="aspectFit" horizontalAlignment="center" verticalAlignment="bottom"  cssClass="trash" tap="eliminarProducto"/>
+                        	<Image col="0" src="{{ producto.imagen?producto.imagen:'~/images/logoActivity.png' }}" cssClass="fila" />
+                            <GridLayout col="2" columns="3*,*,*" rows="*,*,*,*,*" >
+                            	<Label row="0" col="0" colSpan="3" text="{{ producto.marcaExpand }}" textWrap="true" cssClass="titulo" />
+                                <Label row="1" col="0" colSpan="3" text="{{ producto.nombre }}" textWrap="true" cssClass="titulo" style.fontWeight="normal" />
+                                <Label row="2" col="0" colSpan="3" text="{{ 'S/ ' + producto.precio }}" textWrap="true" />
+                                <Label row="3" col="0" text="{{ 'Talla: ' + talla }}" textWrap="true" />
+
+                                <StackLayout row="4" col="0" colSpan="2" orientation="horizontal" visibility="{{nombrecolor==''?'collapsed':'visible'}}" >
+                                    <Label text="{{ 'Color:  ' }}" visibility="{{nombrecolor==''?'collapsed':'visible'}}" textWrap="true" />
+                                    <Label backgroundColor="{{ '#' + color }}" class="colorProducto" visibility="{{nombrecolor==''?'collapsed':'visible'}}" textWrap="true" />
+                                    <Label text="{{ '  ' + nombreColor }}" visibility="{{nombrecolor==''?'collapsed':'visible'}}" textWrap="true" />
+                                </StackLayout>
+                                
+                                <Image row="3" col="2" rowSpan="2"  src="~/images/trash.png" horizontalAlignment="center" verticalAlignment="bottom"  cssClass="trash" tap="eliminarProducto"/>
+                                
                             </GridLayout>
                         </GridLayout>
                     </StackLayout>
@@ -44,7 +51,7 @@
                     <Image src="~/images/back.png" tap="buttonBackTap"/>
                 </StackLayout>
                 <StackLayout col="2">
-                    <Label text="Confirmar" cssClass="solicitarProducto" textWrap="true" tap="confirmarSolicitud" />
+                    <Label text="Confirmar" cssClass="solicitarProducto" textWrap="true" tap="enviarPedido" />
                 </StackLayout>
             </GridLayout>
 

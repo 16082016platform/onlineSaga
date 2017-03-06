@@ -27,6 +27,10 @@ function onListViewItemTap(args) {
 
     helpers.navigate({
         moduleName: 'components/media/media',
+        animated: true,
+        transition: {
+            name: "slide"
+        },
         context: {
             filter: {
                 producto: itemData.details.Id
@@ -63,45 +67,49 @@ function pageLoaded(args) {
     helpers.platformInit(page);
     page.bindingContext = viewModel;
 
-    viewModel.set('isLoading', true);
-    viewModel.set('listItems', []);
+    
+    var context = page.navigationContext;
+    viewModel.set('subcategoria', context.subcategoria.subcategoria);
 
-    function _fetchData() {
-        var context = page.navigationContext;
-        viewModel.set('subcategoria', context.subcategoria.subcategoria);
 
-        if (context && context.filter) {
-            return service.getAllRecords(context.filter);
-        }
+    // viewModel.set('isLoading', true);
+    // viewModel.set('listItems', []);
+    // function _fetchData() {
+    //     var context = page.navigationContext;
+    //     viewModel.set('subcategoria', context.subcategoria.subcategoria);
 
-        return service.getAllRecords();
-    };
+    //     if (context && context.filter) {
+    //         return service.getAllRecords(context.filter);
+    //     }
 
-    _fetchData()
-        .then(function (result) {
-            var itemsList = [];
-            var index = 0;
-            result.forEach(function (item) {
+    //     return service.getAllRecords();
+    // };
 
-                flattenLocationProperties(item);
-                itemsList.push({
-                    header: item.nombre,
-                    index: index,
-                    image: item.imagen ? item.imagen : '~/images/logoActivity.png',
-                    precioDescuento: item.descuento > 0 ? (item.precio * (1 - (item.descuento / 100))).toFixed(2) : item.precio,
-                    colores: item.mediaExpand.length > 1 ? item.mediaExpand : [],
-                    // singleItem properties
-                    details: item
-                });
-                index++;
-            });
-            viewModel.set('listItems', itemsList);
-            viewModel.set('isLoading', false);
-        })
-        .catch(function onCatch() {
-            viewModel.set('isLoading', false);
-        });
-    // additional pageLoaded
+    // _fetchData()
+    //     .then(function (result) {
+    //         var itemsList = [];
+    //         var index = 0;
+    //         result.forEach(function (item) {
+
+    //             flattenLocationProperties(item);
+    //             itemsList.push({
+    //                 header: item.nombre,
+    //                 index: index,
+    //                 image: item.imagen ? item.imagen : '~/images/logoActivity.png',
+    //                 precioDescuento: item.descuento > 0 ? (item.precio * (1 - (item.descuento / 100))).toFixed(2) : item.precio,
+    //                 colores: item.mediaExpand.length > 1 ? item.mediaExpand : [],
+    //                 // singleItem properties
+    //                 details: item
+    //             });
+    //             index++;
+    //         });
+    //         viewModel.set('listItems', itemsList);
+    //         viewModel.set('isLoading', false);
+    //     })
+    //     .catch(function onCatch() {
+    //         viewModel.set('isLoading', false);
+    //     });
+    // // additional pageLoaded
 
     if (isInit) {
         isInit = false;

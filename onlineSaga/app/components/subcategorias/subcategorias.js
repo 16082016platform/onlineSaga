@@ -77,47 +77,50 @@ function pageLoaded(args) {
 
     helpers.platformInit(page);
     page.bindingContext = viewModel;
+    
+    var context = page.navigationContext;
+    viewModel.set('categoria', context.categoria.categoria);
 
-    viewModel.set('isLoading', true);
-    viewModel.set('listItems', []);
+    // viewModel.set('isLoading', true);
+    // viewModel.set('listItems', []);
 
-    function _fetchData() {
-        var context = page.navigationContext;
-        viewModel.set('categoria', context.categoria.categoria);
+    // function _fetchData() {
+    //     var context = page.navigationContext;
+    //     viewModel.set('categoria', context.categoria.categoria);
 
-        if (context && context.filter) {
-            return service.getAllRecords(context.filter);
-        }
+    //     if (context && context.filter) {
+    //         return service.getAllRecords(context.filter);
+    //     }
 
-        return service.getAllRecords();
-    };
+    //     return service.getAllRecords();
+    // };
 
-    _fetchData()
-        .then(function (result) {
-            var itemsList = [];
-            var index = 0;
-            result.forEach(function (item) {
+    // _fetchData()
+    //     .then(function (result) {
+    //         var itemsList = [];
+    //         var index = 0;
+    //         result.forEach(function (item) {
 
-                flattenLocationProperties(item);
+    //             flattenLocationProperties(item);
 
-                itemsList.push({
+    //             itemsList.push({
 
-                    header: item.nombre,
+    //                 header: item.nombre,
 
-                    index: index,
-                    // singleItem properties
-                    details: item
-                });
-                index++;
-            });
+    //                 index: index,
+    //                 // singleItem properties
+    //                 details: item
+    //             });
+    //             index++;
+    //         });
 
-            viewModel.set('listItems', itemsList);
-            viewModel.set('isLoading', false);
-        })
-        .catch(function onCatch() {
-            viewModel.set('isLoading', false);
-        });
-    // additional pageLoaded
+    //         viewModel.set('listItems', itemsList);
+    //         viewModel.set('isLoading', false);
+    //     })
+    //     .catch(function onCatch() {
+    //         viewModel.set('isLoading', false);
+    //     });
+    // // additional pageLoaded
 
     if (isInit) {
         isInit = false;

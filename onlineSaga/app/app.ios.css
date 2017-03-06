@@ -1,5 +1,5 @@
 ActionBar {
-    background-color: #b2c804;
+    background-color: #ff0000;
     color: white;
     text-align: center;
     font-weight: bold;
@@ -15,7 +15,7 @@ ActionBar {
     color: #ffffff;
     height: 100;
     width: 120;
-    background-color: #b2c804;
+    background-color: #ff0000;
     border-radius: 10;
     text-align: center;
 }
@@ -31,4 +31,9 @@ ActionBar {
 
 .footer StackLayout {
     vertical-align: middle;
+}
+
+
+#splashScreen {
+    background-color: #ff0000;
 }

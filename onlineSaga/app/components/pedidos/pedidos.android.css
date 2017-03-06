@@ -1,12 +1,11 @@
 .footer StackLayout .solicitarProducto {
     font-size: 50;
     color: white;
-    background-color: #b2c804;
+    background-color: #ff0000;
     padding: 5;
     text-align: center;
     margin: 0 30 0 30;
 }
-
 
 .titulo {
     font-size: 30;
@@ -15,6 +14,19 @@
 }
 
 ListView Label {
-    font-size: 20;
+    font-size: 50;
     color: #999999;
+}
+
+.colorProducto {
+    width: 50;
+    height: 50;
+    border-width: 1;
+    border-color: white;
+    border-radius: 100;
+}
+
+.trash {
+    height: 100;
+    margin: 5%;
 }
