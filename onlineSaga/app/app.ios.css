@@ -19,14 +19,13 @@ ActionBar {
     border-radius: 10;
     text-align: center;
 }
-
+/*
 
 .footer {
     background-color: #f7f7f7;
     padding-top: 5;
     border-top-width: 50;
     border-top-style: solid;
-    border-top-color: red;
 }
 
 .footer StackLayout {
@@ -36,4 +35,4 @@ ActionBar {
 
 #splashScreen {
     background-color: #ff0000;
-}
+}*/

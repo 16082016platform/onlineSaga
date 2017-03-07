@@ -34,7 +34,6 @@ ActionBar Label {
     padding-top: 5;
     border-top-width: 50;
     border-top-style: solid;
-    border-top-color: red;
 }
 
 .footer StackLayout {

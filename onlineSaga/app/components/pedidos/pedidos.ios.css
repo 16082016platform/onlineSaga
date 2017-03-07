@@ -1,3 +1,7 @@
+.footer StackLayout {
+    vertical-align: middle;
+}
+
 .footer StackLayout .solicitarProducto {
     font-size: 15;
     color: white;

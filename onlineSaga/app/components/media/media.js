@@ -81,25 +81,31 @@ function pageLoaded(args) {
 
     page.bindingContext = viewModel;
 
-    if (viewModel.get('tallaSelected') == '') {
-        viewModel.set('tallaSelected', viewModel.get('producto').tallas[0]);
+    try {
+        if (viewModel.get('tallaSelected') == '') {
+            viewModel.set('tallaSelected', viewModel.get('producto').tallas[0]);
+        }
+
+        if (menor > -1) {
+            viewModel.set('colorSelected', itemsList[menor].details.color);
+
+            viewModel.set('imagenSelected', itemsList[menor].image)
+            viewModel.set('listItems', itemsList);
+            viewModel.set('isLoading', false);
+            page.getViewById("talla" + viewModel.get('tallaSelected')).cssClass = "tallaProductoSelected";
+            page.getViewById("color" + viewModel.get('colorSelected')).cssClass = "colorProductoSelected";
+        } else {
+            viewModel.set('imagenSelected', "~/images/logoActivity.png");
+            viewModel.set('colorSelected', "");
+            viewModel.set('listItems', itemsList);
+            viewModel.set('isLoading', false);
+            page.getViewById("talla" + viewModel.get('tallaSelected')).cssClass = "tallaProductoSelected";
+        }
+    }
+    catch (err) {
+        alert(err.message);
     }
 
-    if (menor > -1) {
-        viewModel.set('colorSelected', itemsList[menor].details.color);
-
-        viewModel.set('imagenSelected', itemsList[menor].image)
-        viewModel.set('listItems', itemsList);
-        viewModel.set('isLoading', false);
-        page.getViewById("talla" + viewModel.get('tallaSelected')).cssClass = "tallaProductoSelected";
-        page.getViewById("color" + viewModel.get('colorSelected')).cssClass = "colorProductoSelected";
-    } else {
-        viewModel.set('imagenSelected', "~/images/logoActivity.png");
-        viewModel.set('colorSelected', "");
-        viewModel.set('listItems', itemsList);
-        viewModel.set('isLoading', false);
-        page.getViewById("talla" + viewModel.get('tallaSelected')).cssClass = "tallaProductoSelected";
-    }
 
 
     // viewModel.set('isLoading', true);

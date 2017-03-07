@@ -5,3 +5,7 @@ Label{
     color: white;
     text-align: center;
 }
+
+#splashScreen {
+    background-color: #ff0000;
+}
