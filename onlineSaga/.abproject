@@ -5,7 +5,7 @@
   "AppIdentifier": "com.telerik.CalzadoOechsle",
   "DisplayName": "CalzadoOechsle",
   "Author": "Letrecorp SA",
-  "Description": "onlineSaga",
+  "Description": "Para muestra de calzado en Oechsle",
   "BundleVersion": "1.0",
   "AndroidVersionCode": "1",
   "iOSDeviceFamily": [

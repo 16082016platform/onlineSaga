@@ -152,8 +152,9 @@ _fetchData()
             itemsList.push({
                 image: item.imagen,
                 details: item
-            });
+            }); 
         });
+        // itemsList.details.valor.visible = (itemsList.details.valor ? true : false);
         media.set('listItems', itemsList);
     })
     .catch(function onCatch() {

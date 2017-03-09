@@ -77,6 +77,12 @@ function pageLoaded(args) {
         } else {
             itemsList[i].details.visible = false;
         }
+
+        // if (context.producto.Id == itemsList[i].details.producto && itemsList[i].details.value) {
+        //     itemsList[i].details.value.visible = true;
+        // } else {
+        //     itemsList[i].details.value.visible = false;
+        // }
     }
 
     page.bindingContext = viewModel;
@@ -87,8 +93,9 @@ function pageLoaded(args) {
         }
 
         if (menor > -1) {
-            viewModel.set('colorSelected', itemsList[menor].details.color);
-
+            if (viewModel.get('colorSelected') == '') {
+                viewModel.set('colorSelected', itemsList[menor].details.color);
+            }
             viewModel.set('imagenSelected', itemsList[menor].image)
             viewModel.set('listItems', itemsList);
             viewModel.set('isLoading', false);
